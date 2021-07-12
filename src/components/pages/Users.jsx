@@ -1,4 +1,9 @@
+// import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../providers/UserProvider";
+
 import styled from "styled-components";
+import { SecondaryButton } from "../atoms/button/SecondaryButton";
 import { SearchInput } from "../molecules/SearchInput";
 import { UserCard } from "../organisms/user/UserCard";
 
@@ -17,10 +22,20 @@ const users = [...Array(10).keys()].map((val) => {
 });
 
 export const Users = () => {
+  // const { state } = useLocation();
+  // console.log(state);
+  const { userInfo, setUserInfo } = useContext(UserContext);
+
+  const onClickSwitch = () => {
+    setUserInfo({ isAdmin: !userInfo.isAdmin });
+  };
+
   return (
     <SContainer>
       <h2>User一覧</h2>
       <SearchInput />
+      <br />
+      <SecondaryButton onClick={onClickSwitch}>切替</SecondaryButton>
       <SUserArea>
         {users.map((user) => (
           <UserCard key={user.id} user={user} />
